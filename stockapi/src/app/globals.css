@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #f4f6f4;
   color: #212529;
@@ -100,6 +105,7 @@ a {
   margin: 0 auto;
   padding: 24px 20px;
   flex: 1;
+  min-width: 0;
 }
 
 .rodape {
@@ -130,6 +136,7 @@ a {
   border-radius: 6px;
   padding: 18px;
   margin-bottom: 20px;
+  min-width: 0;
 }
 
 .cartao-aluno {
@@ -189,9 +196,13 @@ a {
 
 .grade-duas-colunas {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
   align-items: start;
+}
+
+.grade-duas-colunas > * {
+  min-width: 0;
 }
 
 .lista-botoes-atalho {
@@ -259,6 +270,8 @@ a {
   border-radius: 4px;
   font-size: 0.92rem;
   font-family: inherit;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .campo-texto:focus, .campo-select:focus {
@@ -321,7 +334,9 @@ a {
 
 .tabela-container {
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabela {
@@ -342,6 +357,17 @@ a {
 .tabela td {
   padding: 10px 12px;
   border-bottom: 1px solid #e9ecef;
+  word-break: break-word;
+}
+
+.col-centro {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.col-moeda {
+  text-align: right;
+  white-space: nowrap;
 }
 
 .tabela tr:hover {
@@ -457,6 +483,7 @@ a {
   border-radius: 5px;
   padding: 12px;
   margin-top: 10px;
+  min-width: 0;
 }
 
 .total-pedido {
@@ -484,6 +511,65 @@ a {
   align-items: flex-end;
 }
 
+.linha-inputs .form-grupo {
+  margin-bottom: 0;
+}
+
+.btn-incluir-item {
+  height: 38px;
+  white-space: nowrap;
+}
+
+.itens-lista-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-pedido-card {
+  background-color: #f8faf9;
+  border: 1px solid #d8e2dc;
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-pedido-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.item-pedido-nome {
+  font-weight: 600;
+  color: #1b4332;
+  word-break: break-word;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.item-pedido-detalhes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: #555555;
+  padding-top: 8px;
+  border-top: 1px dashed #d8e2dc;
+}
+
+.item-pedido-subtotal {
+  font-weight: bold;
+  color: #1b4332;
+  font-size: 0.95rem;
+  margin-left: auto;
+}
+
 .total-carrinho {
   display: flex;
   justify-content: space-between;
@@ -493,6 +579,8 @@ a {
   border-top: 2px solid #ced4da;
   font-size: 1.1rem;
   color: #1b4332;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .alerta {
@@ -500,6 +588,7 @@ a {
   border-radius: 5px;
   margin-bottom: 16px;
   font-size: 0.92rem;
+  word-break: break-word;
 }
 
 .alerta-sucesso {
@@ -518,6 +607,12 @@ a {
   text-align: center;
   color: #666666;
   padding: 24px;
+}
+
+@media (max-width: 960px) {
+  .grade-duas-colunas {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -546,10 +641,6 @@ a {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .grade-duas-colunas {
-    grid-template-columns: 1fr;
-  }
-
   .barra-filtros {
     flex-direction: column;
     align-items: stretch;
@@ -562,10 +653,44 @@ a {
   .linha-inputs {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+  }
+
+  .btn-incluir-item {
+    width: 100%;
+    height: 40px;
   }
 
   .conteudo {
     padding: 16px 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .itens-tabela-desktop {
+    display: none;
+  }
+
+  .itens-lista-mobile {
+    display: flex;
+  }
+
+  .bloco {
+    padding: 14px;
+  }
+
+  .titulo-tela {
+    font-size: 1.35rem;
+  }
+
+  .total-carrinho {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grade-quatro {
+    grid-template-columns: 1fr;
   }
 }
 

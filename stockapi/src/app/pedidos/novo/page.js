@@ -257,7 +257,7 @@ export default function CriarPedidoPage() {
                       onChange={(e) => setQuantidade(e.target.value)}
                     />
                   </div>
-                  <button type="submit" className="btn btn-verde" style={{ height: "38px" }}>
+                  <button type="submit" className="btn btn-verde btn-incluir-item">
                     + Incluir no Pedido
                   </button>
                 </div>
@@ -276,25 +276,26 @@ export default function CriarPedidoPage() {
               </p>
             ) : (
               <>
-                <div className="tabela-container">
+                {/* Tabela para desktop e telas maiores */}
+                <div className="tabela-container itens-tabela-desktop">
                   <table className="tabela">
                     <thead>
                       <tr>
                         <th>Produto</th>
-                        <th>Qtd.</th>
-                        <th>Preço</th>
-                        <th>Subtotal</th>
-                        <th>Ação</th>
+                        <th className="col-centro" style={{ width: "65px" }}>Qtd.</th>
+                        <th className="col-moeda">Preço</th>
+                        <th className="col-moeda">Subtotal</th>
+                        <th className="col-centro" style={{ width: "85px" }}>Ação</th>
                       </tr>
                     </thead>
                     <tbody>
                       {itens.map((it, idx) => (
                         <tr key={idx}>
                           <td><strong>{it.nome}</strong></td>
-                          <td>{it.quantidade}</td>
-                          <td>R$ {it.preco_unitario.toFixed(2)}</td>
-                          <td>R$ {it.subtotal.toFixed(2)}</td>
-                          <td>
+                          <td className="col-centro">{it.quantidade}</td>
+                          <td className="col-moeda">R$ {it.preco_unitario.toFixed(2)}</td>
+                          <td className="col-moeda">R$ {it.subtotal.toFixed(2)}</td>
+                          <td className="col-centro">
                             <button
                               type="button"
                               onClick={() => removerItem(idx)}
@@ -307,6 +308,33 @@ export default function CriarPedidoPage() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Cards para celular e telas menores */}
+                <div className="itens-lista-mobile">
+                  {itens.map((it, idx) => (
+                    <div key={idx} className="item-pedido-card">
+                      <div className="item-pedido-topo">
+                        <strong className="item-pedido-nome">{it.nome}</strong>
+                        <button
+                          type="button"
+                          onClick={() => removerItem(idx)}
+                          className="btn btn-vermelho"
+                          style={{ flexShrink: 0 }}
+                        >
+                          Remover
+                        </button>
+                      </div>
+                      <div className="item-pedido-detalhes">
+                        <span>
+                          {it.quantidade} un. &times; R$ {it.preco_unitario.toFixed(2)}
+                        </span>
+                        <span className="item-pedido-subtotal">
+                          Subtotal: R$ {it.subtotal.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="total-carrinho">

@@ -187,14 +187,14 @@ export default function PedidosPage() {
                       <p style={{ color: "#666" }}>Nenhum item associado a este pedido.</p>
                     ) : (
                       <>
-                        <div className="tabela-container">
+                        <div className="tabela-container itens-tabela-desktop">
                           <table className="tabela">
                             <thead>
                               <tr>
                                 <th>Produto</th>
-                                <th>Quantidade</th>
-                                <th>Preço Unitário</th>
-                                <th>Subtotal</th>
+                                <th className="col-centro" style={{ width: "80px" }}>Qtd.</th>
+                                <th className="col-moeda">Preço Unitário</th>
+                                <th className="col-moeda">Subtotal</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -205,16 +205,35 @@ export default function PedidosPage() {
 
                                 return (
                                   <tr key={it.id}>
-                                    <td>{nomeProd}</td>
-                                    <td>{it.quantidade}</td>
-                                    <td>R$ {precoUnit.toFixed(2)}</td>
-                                    <td>R$ {subtotal.toFixed(2)}</td>
+                                    <td><strong>{nomeProd}</strong></td>
+                                    <td className="col-centro">{it.quantidade}</td>
+                                    <td className="col-moeda">R$ {precoUnit.toFixed(2)}</td>
+                                    <td className="col-moeda">R$ {subtotal.toFixed(2)}</td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           </table>
                         </div>
+
+                        <div className="itens-lista-mobile">
+                          {itens.map((it) => {
+                            const nomeProd = produtos[it.produto_id] || `Produto #${it.produto_id}`;
+                            const precoUnit = parseFloat(it.preco_unitario) || 0;
+                            const subtotal = (Number(it.quantidade) || 0) * precoUnit;
+
+                            return (
+                              <div key={it.id} className="item-pedido-card">
+                                <span className="item-pedido-nome">{nomeProd}</span>
+                                <div className="item-pedido-detalhes">
+                                  <span>{it.quantidade} un. &times; R$ {precoUnit.toFixed(2)}</span>
+                                  <span className="item-pedido-subtotal">Subtotal: R$ {subtotal.toFixed(2)}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
                         <div className="total-pedido">
                           <strong>Total do Pedido:</strong> R$ {totalSoma.toFixed(2)}
                         </div>
